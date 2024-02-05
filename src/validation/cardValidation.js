@@ -6,7 +6,6 @@ const titleSchema = Joi.object({
 const subtitleSchema = Joi.object({
   subtitle: Joi.string().min(2).max(256).required(),
 });
-console.log(subtitleSchema);
 const descriptionSchema = Joi.object({
   description: Joi.string().min(2).max(1024).required(),
 });

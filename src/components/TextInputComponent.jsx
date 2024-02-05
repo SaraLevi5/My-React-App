@@ -38,7 +38,7 @@ TextInputComponent.prototype = {
   autoFocus: propTypes.bool,
   value: propTypes.string.isRequired,
   onChange: propTypes.func.isRequired,
-  onBlur: propTypes.func.isRequired,
+  onBlur: propTypes.func,
   errors: propTypes.string,
   required: propTypes.bool,
 };

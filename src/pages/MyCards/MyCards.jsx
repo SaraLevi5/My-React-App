@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import LoginContext from "../../store/loginContext.js";
 import { toast } from "react-toastify";
+import normalizeCard from "../HomePage/normalizeCard.js";
 
 const MyCards = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
@@ -26,6 +27,13 @@ const MyCards = () => {
   }, []);
 
   if (!dataFromServer || !dataFromServer.length) {
+    return <Typography>Could not find any items</Typography>;
+  }
+  let dataFromServerFiltered = normalizeCard(
+    dataFromServer,
+    login ? login._id : undefined
+  );
+  if (!dataFromServerFiltered || !dataFromServerFiltered.length) {
     return <Typography>Could not find any items</Typography>;
   }
 
@@ -64,10 +72,33 @@ const MyCards = () => {
         console.log(err);
       });
   };
+  const handleLikeCard = async (id) => {
+    try {
+      let { data } = await axios.patch("/cards/" + id);
+      setDataFromServer((cDataFromServer) => {
+        let cardIndex = cDataFromServer.findIndex((card) => card._id === id);
+        if (cardIndex) {
+          cDataFromServer[cardIndex] = data;
+        }
+        return [...cDataFromServer];
+      });
+    } catch (error) {
+      toast.error("🦄 Please Login", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
 
   return (
     <Grid container spacing={2}>
-      {dataFromServer.map((item, index) => (
+      {dataFromServerFiltered.map((item, index) => (
         <Grid item lg={3} md={6} xs={12} key={"Card" + index}>
           <CardComponent
             id={item._id}
@@ -78,8 +109,10 @@ const MyCards = () => {
             phone={item.phone}
             address={item.address}
             cardNumber={item.bizNumber}
+            liked={item.liked}
             onDelete={handleDeleteCard}
             onEdit={handleEditCard}
+            onLike={handleLikeCard}
           />
         </Grid>
       ))}

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import LoginContext from "../../store/loginContext.js";
 import { toast } from "react-toastify";
+import normalizeCard from "./normalizeCard.js";
 
 const HomePage = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
@@ -21,15 +22,20 @@ const HomePage = () => {
         setDataFromServer(data);
       })
       .catch((err) => {
-        console.log("error from axios", err);
+        console.log("axios err", err);
       });
   }, []);
   if (!dataFromServer || !dataFromServer.length) {
     return <Typography>Could not find any items...</Typography>;
   }
-
+  let dataFromServerFiltered = normalizeCard(
+    dataFromServer,
+    login ? login._id : undefined
+  );
+  if (!dataFromServerFiltered || !dataFromServerFiltered.length) {
+    return <Typography>Could not find any items</Typography>;
+  }
   const handleDeleteCard = (id) => {
-    console.log("father: card to delete", id);
     setDataFromServer((currentDataFromServer) =>
       currentDataFromServer.filter((card) => card._id !== id)
     );
@@ -59,10 +65,32 @@ const HomePage = () => {
         console.log(err);
       });
   };
-
+  const handleLikeCard = async (id) => {
+    try {
+      let { data } = await axios.patch("/cards/" + id);
+      setDataFromServer((cDataFromServer) => {
+        let cardIndex = cDataFromServer.findIndex((card) => card._id === id);
+        if (cardIndex) {
+          cDataFromServer[cardIndex] = data;
+        }
+        return [...cDataFromServer];
+      });
+    } catch (error) {
+      toast.error("🦄 Please Login", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
   return (
     <Grid container spacing={2}>
-      {dataFromServer.map((item, index) => (
+      {dataFromServerFiltered.map((item, index) => (
         <Grid item lg={3} md={6} xs={12} key={"Card" + index}>
           <CardComponent
             id={item._id}
@@ -73,8 +101,10 @@ const HomePage = () => {
             phone={item.phone}
             address={item.address}
             cardNumber={item.bizNumber}
+            liked={item.liked}
             onDelete={handleDeleteCard}
             onEdit={handleEditCard}
+            onLike={handleLikeCard}
           />
         </Grid>
       ))}

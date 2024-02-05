@@ -25,16 +25,19 @@ const CardComponent = ({
   address,
   cardNumber,
   id,
+  liked,
   onDelete,
   onEdit,
+  onLike,
 }) => {
-  // let { title, subtitle, img, body } = props;
-  // console.log(props);
   const handleDeleteClick = () => {
     onDelete(id);
   };
   const handleEditClick = () => {
     onEdit(id);
+  };
+  const handleLikeClick = () => {
+    onLike(id);
   };
   return (
     <Card square raised>
@@ -73,11 +76,11 @@ const CardComponent = ({
             </IconButton>
           </Box>
           <Box>
-            {/* <IconButton>
+            {/* {<IconButton>
               <LocalPhoneIcon />
-            </IconButton> */}
-            <IconButton>
-              <FavoriteIcon />
+            </IconButton>} */}
+            <IconButton onClick={handleLikeClick}>
+              <FavoriteIcon color={liked ? "error" : "inherit"} />
             </IconButton>
           </Box>
         </Box>
@@ -101,6 +104,8 @@ CardComponent.propTypes = {
   id: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
+  onLike: PropTypes.func.isRequired,
+  liked: PropTypes.bool,
 };
 
 export default CardComponent;

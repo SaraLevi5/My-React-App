@@ -53,7 +53,6 @@ const EditCardPage = () => {
     "street",
     "houseNumber",
   ];
-  console.log(errorKeysArray.length, errorKeysArray);
 
   let { id } = useParams(); //get id from url
   const { login } = useContext(LoginContext);
@@ -108,7 +107,7 @@ const EditCardPage = () => {
         draggable: true,
         progress: undefined,
       });
-      navigate(ROUTES.HOME);
+      navigate(ROUTES.MYCARDS);
     } catch (err) {
       console.log(err);
     }
