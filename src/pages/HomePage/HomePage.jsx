@@ -25,7 +25,7 @@ const HomePage = () => {
       });
   }, []);
   if (!dataFromServer || !dataFromServer.length) {
-    return <Typography>Could not find any items</Typography>;
+    return <Typography>Could not find any items...</Typography>;
   }
 
   const handleDeleteCard = (id) => {
