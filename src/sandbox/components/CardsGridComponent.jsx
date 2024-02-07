@@ -9,7 +9,7 @@ import car5 from "../assets/imgs/car 5.png";
 const initialDataFromServer = [
   {
     title: "title1",
-    subtitle: "subtitle1",
+    subtitle: "subtitlejhkjhkhkjh1",
     body: "body1",
     img: car1,
   },
