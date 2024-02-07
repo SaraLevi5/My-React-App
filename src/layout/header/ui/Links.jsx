@@ -11,7 +11,7 @@ import LoginContext from "../../../store/loginContext";
 
 const Links = () => {
   const { login } = useContext(LoginContext);
-  const loggedIn = login;
+
   return (
     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
       {alwaysLinks.map((myItem, index) => (
@@ -19,20 +19,20 @@ const Links = () => {
           {myItem.children}
         </NavLinkComponent>
       ))}
-      {loggedIn &&
+      {login &&
         loggedInLinks.map((myItem, index) => (
           <NavLinkComponent to={myItem.to} key={"linksnav2" + index}>
             {myItem.children}
           </NavLinkComponent>
         ))}
-      {loggedIn &&
-        loggedIn.isBusiness &&
+      {login &&
+        login.isBusiness &&
         bizLinks.map((myItem, index) => (
           <NavLinkComponent to={myItem.to} key={"linksnav2" + index}>
             {myItem.children}
           </NavLinkComponent>
         ))}
-      {!loggedIn &&
+      {!login &&
         loggedOutLinks.map((myItem, index) => (
           <NavLinkComponent to={myItem.to} key={"linksnav3" + index}>
             {myItem.children}

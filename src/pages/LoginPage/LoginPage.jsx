@@ -1,7 +1,5 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-/* mui hooks */
-
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
   Avatar,
@@ -17,7 +15,6 @@ import {
   Alert,
 } from "@mui/material";
 import CopyrightComponent from "./ui/CopyrightComponent";
-
 import ROUTES from "../../routes/ROUTES";
 import axios from "axios";
 import LoginContext from "../../store/loginContext";
@@ -27,51 +24,30 @@ import validateLogin, {
   validateEmailLogin,
   validatePasswordLogin,
 } from "../../validation/loginValidation";
-
 const LoginPage = () => {
-  /* top lvl for hooks */
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
   const { setLogin } = useContext(LoginContext);
-  /**
-   * const emailArrState = useState("")
-   * let emailValue = emailArrState[0] -> value of current state
-   * !never modify emailValue 😡
-   * let setEmailValue = emailArrState[1] -> function to update the state
-   */
-  /* logic lvl for js */
+
   const handleEmailChange = (e) => {
-    // console.log(e.target.value);
     setEmailValue(e.target.value);
   };
   const handlePasswordChange = (e) => {
-    // console.log(e.target.value);
     setPasswordValue(e.target.value);
   };
   const handleSubmit = async (e) => {
-    e.preventDefault(); //stop refresh
-    //status ok from server
+    e.preventDefault();
     try {
-      // let dataFromJoi = validateLogin({
-      //   email: emailValue,
-      //   password: passwordValue,
-      // });
-      // console.log("dataFromJoi", dataFromJoi);
       let { data } = await axios.post("/users/login", {
         email: emailValue,
         password: passwordValue,
       });
-
-      console.log("data from axios", data);
-      localStorage.setItem("token", data);
-      const decoded = jwtDecode(data); //convert token to object
-
-      console.log("decoded", decoded);
+      sessionStorage.setItem("token", data);
+      const decoded = jwtDecode(data);
       setLogin(decoded);
-
       toast.success("🦄 LoggedIn Successfully", {
         position: "top-right",
         autoClose: 5000,
@@ -82,15 +58,12 @@ const LoginPage = () => {
         progress: undefined,
         theme: "dark",
       });
-
       navigate(ROUTES.HOME);
     } catch (err) {
-      console.log("err from axios", err);
       setLogin(null);
       localStorage.clear();
     }
   };
-
   const handleEmailBlur = () => {
     let dataFromJoi = validateEmailLogin({ email: emailValue });
     console.log("dataFromJoi", dataFromJoi);
@@ -102,13 +75,13 @@ const LoginPage = () => {
   };
   const handlePasswordBlur = () => {
     let dataFromJoi = validatePasswordLogin({ password: passwordValue });
-    console.log("dataFromJoi", dataFromJoi);
     if (dataFromJoi.error) {
       setPasswordError(dataFromJoi.error.details[0].message);
     } else {
       setPasswordError("");
     }
   };
+
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
@@ -181,18 +154,8 @@ const LoginPage = () => {
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
+              onClick={handleCheckBox}
             />
-            <Paper>
-              <Typography variant="p" color="initial">
-                Email: Rachel@mail.com
-              </Typography>
-              <Typography variant="p" color="initial">
-                Email: mail1@gmail.com
-              </Typography>
-              <Typography variant="p" color="initial">
-                Password: Aa123456!
-              </Typography>
-            </Paper>
             <Button
               type="submit"
               fullWidth

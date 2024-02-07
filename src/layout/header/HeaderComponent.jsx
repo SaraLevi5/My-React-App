@@ -171,7 +171,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            LOGO
+            BUSINESS
           </Typography>
           <Links />
           <FilterComponent />
@@ -188,25 +188,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-
             {login && (
               <IconButton
                 size="large"
