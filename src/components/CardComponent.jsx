@@ -1,3 +1,4 @@
+// import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import {
   Card,
   CardHeader,
@@ -11,10 +12,8 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeIcon from "@mui/icons-material/Mode";
-// import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PropTypes from "prop-types";
-import { alt } from "joi";
 
 const CardComponent = ({
   title,
@@ -26,10 +25,14 @@ const CardComponent = ({
   cardNumber,
   id,
   liked,
+  onCard,
   onDelete,
   onEdit,
   onLike,
 }) => {
+  const handleCardClick = () => {
+    onCard(id);
+  };
   const handleDeleteClick = () => {
     onDelete(id);
   };
@@ -40,8 +43,8 @@ const CardComponent = ({
     onLike(id);
   };
   return (
-    <Card square raised>
-      <CardActionArea>
+    <Card raised>
+      <CardActionArea onClick={handleCardClick}>
         <CardMedia component="img" image={img} alt={alt} height={200} />
       </CardActionArea>
       <CardHeader title={title} subheader={subtitle}></CardHeader>
@@ -102,6 +105,7 @@ CardComponent.propTypes = {
   }).isRequired,
   cardNumber: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
+  onCard: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onLike: PropTypes.func.isRequired,

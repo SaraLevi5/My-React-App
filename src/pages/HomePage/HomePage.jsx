@@ -8,23 +8,32 @@ import ROUTES from "../../routes/ROUTES";
 import LoginContext from "../../store/loginContext.js";
 import { toast } from "react-toastify";
 import normalizeCard from "./normalizeCard.js";
+import searchContext from "../../store/searchContext";
 
 const HomePage = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
   const navigate = useNavigate();
   const { login } = useContext(LoginContext);
+  const { search } = useContext(searchContext);
 
   useEffect(() => {
     axios
       .get("/cards")
       .then(({ data }) => {
-        console.log(data);
         setDataFromServer(data);
+        if (search) {
+          setDataFromServer((currentDataFromServer) =>
+            currentDataFromServer.filter((card) =>
+              card.title.toLowerCase().includes(search.toLowerCase())
+            )
+          );
+        }
       })
       .catch((err) => {
         console.log("axios err", err);
       });
-  }, []);
+  }, [search]);
+
   if (!dataFromServer || !dataFromServer.length) {
     return <Typography>Could not find any items...</Typography>;
   }
@@ -35,10 +44,28 @@ const HomePage = () => {
   if (!dataFromServerFiltered || !dataFromServerFiltered.length) {
     return <Typography>Could not find any items</Typography>;
   }
-  const handleDeleteCard = (id) => {
-    setDataFromServer((currentDataFromServer) =>
-      currentDataFromServer.filter((card) => card._id !== id)
-    );
+
+  const handleCard = (id) => {
+    navigate(`${ROUTES.LANDINGPAGE}/${id}`);
+  };
+  const handleDeleteCard = async (id) => {
+    try {
+      await axios.delete("/cards/" + id);
+      setDataFromServer((currentDataFromServer) =>
+        currentDataFromServer.filter((card) => card._id !== id)
+      );
+    } catch (error) {
+      toast.error("🦄 You are not the owner of this card", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
   };
 
   const handleEditCard = (id) => {
@@ -102,6 +129,7 @@ const HomePage = () => {
             address={item.address}
             cardNumber={item.bizNumber}
             liked={item.liked}
+            onCard={handleCard}
             onDelete={handleDeleteCard}
             onEdit={handleEditCard}
             onLike={handleLikeCard}

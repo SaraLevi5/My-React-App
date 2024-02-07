@@ -2,13 +2,15 @@ import SearchIcon from "@mui/icons-material/Search";
 import Search from "./Search";
 import SearchIconWrapper from "./SearchIconWrapper";
 import StyledInputBase from "./StyledInputBase";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import searchContext from "../../../store/searchContext";
 
 const FilterComponent = () => {
-  const [txt, setTxt] = useState("");
+  const { search, setSearch } = useContext(searchContext);
 
   const handleInputChange = (e) => {
-    setTxt(e.target.value);
+    setSearch(e.target.value);
+    console.log(e.target.value);
   };
 
   return (
@@ -19,7 +21,7 @@ const FilterComponent = () => {
       <StyledInputBase
         placeholder="Search…"
         inputProps={{ "aria-label": "search" }}
-        value={txt}
+        value={search || ""}
         onChange={handleInputChange}
       />
     </Search>

@@ -8,23 +8,31 @@ import ROUTES from "../../routes/ROUTES";
 import LoginContext from "../../store/loginContext.js";
 import { toast } from "react-toastify";
 import normalizeCard from "../HomePage/normalizeCard.js";
+import searchContext from "../../store/searchContext";
 
 const MyCards = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
   const navigate = useNavigate();
   const { login } = useContext(LoginContext);
+  const { search } = useContext(searchContext);
 
   useEffect(() => {
     axios
       .get("/cards/my-cards")
       .then(({ data }) => {
-        console.log(data);
         setDataFromServer(data);
+        if (search) {
+          setDataFromServer((currentDataFromServer) =>
+            currentDataFromServer.filter((card) =>
+              card.title.toLowerCase().includes(search.toLowerCase())
+            )
+          );
+        }
       })
       .catch((err) => {
         console.log("error from axios", err);
       });
-  }, []);
+  }, [search]);
 
   if (!dataFromServer || !dataFromServer.length) {
     return <Typography>Could not find any items</Typography>;

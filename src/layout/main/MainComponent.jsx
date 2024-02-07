@@ -3,7 +3,7 @@ const MainComponent = ({ children }) => {
   return (
     <Container
       sx={{
-        minHeight: "90vh",
+        minHeight: "80vh",
       }}
     >
       {children}
