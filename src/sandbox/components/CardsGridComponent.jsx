@@ -33,7 +33,7 @@ const initialDataFromServer = [
   },
   {
     title: "title5",
-    subtitle: "subtitle5",
+    subtitle: "subjjgjhgjghtitle5",
     body: "body5",
     img: car5,
   },
