@@ -10,11 +10,11 @@ const initialDataFromServer = [
   {
     title: "title1",
     subtitle: "subtitlejhkjhkhkjh1",
-    body: "body1",
+    body: "גדגלךדג      ",
     img: car1,
   },
   {
-    title: "title2",
+    title: "כותבתר",
     subtitle: "subtitle2",
     body: "body2",
     img: car2,
