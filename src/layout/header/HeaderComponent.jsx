@@ -106,26 +106,15 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages!!</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+      {login && (
+        <MenuItem onClick={handleLogOut}>
+          <IconButton size="large" aria-label="logout" color="inherit">
+            <LogoutIcon />
+          </IconButton>
+          <p>logout</p>
+        </MenuItem>
+      )}
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -198,7 +187,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
                 <LogoutIcon />
               </IconButton>
             )}
-
             <IconButton
               size="large"
               edge="end"
