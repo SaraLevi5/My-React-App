@@ -21,12 +21,12 @@ import LoginContext from "../../store/loginContext";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
 import toastPopup from "../../services/toastPopup.js";
-import validateLogin, {
+import {
   validateEmailLogin,
   validatePasswordLogin,
 } from "../../validation/loginValidation";
 
-const LoginPage = () => {
+export const LoginPage = () => {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -182,4 +182,3 @@ const LoginPage = () => {
     </Grid>
   );
 };
-export default LoginPage;

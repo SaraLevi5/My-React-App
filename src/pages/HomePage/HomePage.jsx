@@ -9,6 +9,7 @@ import LoginContext from "../../store/loginContext.js";
 import { toast } from "react-toastify";
 import normalizeCard from "./normalizeCard.js";
 import searchContext from "../../store/searchContext";
+import toastPopup from "../../services/toastPopup.js";
 
 const HomePage = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
@@ -44,27 +45,21 @@ const HomePage = () => {
   if (!dataFromServerFiltered || !dataFromServerFiltered.length) {
     return <Typography>Could not find any items</Typography>;
   }
-
   const handleCard = (id) => {
     navigate(`${ROUTES.LANDINGPAGE}/${id}`);
   };
   const handleDeleteCard = async (id) => {
     try {
-      await axios.delete("/cards/" + id);
-      setDataFromServer((currentDataFromServer) =>
-        currentDataFromServer.filter((card) => card._id !== id)
-      );
+      if (login) {
+        await axios.delete("/cards/" + id);
+        setDataFromServer((currentDataFromServer) =>
+          currentDataFromServer.filter((card) => card._id !== id)
+        );
+      } else {
+        toast.error("🦄 please login", toastPopup.error);
+      }
     } catch (error) {
-      toast.error("🦄 You are not the owner of this card", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error("🦄 You are not the owner of this card", toastPopup.error);
     }
   };
 
@@ -75,16 +70,10 @@ const HomePage = () => {
         if (data.user_id == login._id) {
           navigate(`${ROUTES.EDITCARD}/${id}`);
         } else {
-          toast.error("🦄 You are not the owner of this card", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          toast.error(
+            "🦄 You are not the owner of this card",
+            toastPopup.error
+          );
           navigate(ROUTES.HOME);
         }
       })
@@ -103,16 +92,7 @@ const HomePage = () => {
         return [...cDataFromServer];
       });
     } catch (error) {
-      toast.error("🦄 Please Login", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error("🦄 Please Login", toastPopup.error);
     }
   };
   return (

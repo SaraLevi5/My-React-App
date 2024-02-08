@@ -10,6 +10,7 @@ import { fromServer } from "./normalizeEdit";
 import { normalizeCreat } from "../CreatCard/normalizeCreat";
 import ROUTES from "../../routes/ROUTES.js";
 import { toast } from "react-toastify";
+import toastPopup from "../../services/toastPopup.js";
 
 const EditCardPage = () => {
   const navigate = useNavigate();
@@ -98,15 +99,8 @@ const EditCardPage = () => {
     e.preventDefault();
     try {
       await axios.put("/cards/" + id, normalizeCreat(inputsValue));
-      toast.success("Card edited successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success("🦄 Card edited successfully", toastPopup.success);
+
       navigate(ROUTES.MYCARDS);
     } catch (err) {
       console.log(err);
