@@ -32,6 +32,14 @@ const Links = () => {
             {myItem.children}
           </NavLinkComponent>
         ))}
+      {login &&
+        login.isBusiness &&
+        login.isAdmin &&
+        bizLinks.map((myItem, index) => (
+          <NavLinkComponent to={myItem.to} key={"linksnav2" + index}>
+            {myItem.children}
+          </NavLinkComponent>
+        ))}
       {!login &&
         loggedOutLinks.map((myItem, index) => (
           <NavLinkComponent to={myItem.to} key={"linksnav3" + index}>

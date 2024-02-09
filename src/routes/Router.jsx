@@ -11,8 +11,10 @@ import EditCardPage from "../pages/EditCardPage/EditCardPage";
 import MyCards from "../pages/MyCards/MyCards";
 import AuthGuard from "../guard/AuthGuard";
 import BizGuard from "../guard/BizGuard";
+import AdminGuard from "../guard/AdminGuard";
 import Favorite from "../pages/Favorite/Favorite";
 import LandingPage from "../pages/LandingPage/LandingPage";
+import AdminCRM from "../sandbox/AdminCRM";
 
 const Router = () => {
   return (
@@ -22,7 +24,14 @@ const Router = () => {
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path={`${ROUTES.LANDINGPAGE}/:id`} element={<LandingPage />} />
-      <Route path={ROUTES.FAVORITE} element={<Favorite />} />
+      <Route
+        path={ROUTES.FAVORITE}
+        element={
+          <AuthGuard>
+            <Favorite />
+          </AuthGuard>
+        }
+      />
 
       <Route
         path={ROUTES.CREATECARD}
@@ -46,6 +55,14 @@ const Router = () => {
           <BizGuard>
             <EditCardPage />
           </BizGuard>
+        }
+      />
+      <Route
+        path={`${ROUTES.EDITCARD}/:id`}
+        element={
+          <AdminGuard>
+            <AdminCRM />
+          </AdminGuard>
         }
       />
 

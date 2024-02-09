@@ -31,6 +31,7 @@ const LoginPage = () => {
   const [passwordValue, setPasswordValue] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [failedLoginAttempts, setFailedLoginAttempts] = useState(0); // State for failed login attempts
   const navigate = useNavigate();
   const { setLogin } = useContext(LoginContext);
   const [checked, setChecked] = useState(false);
@@ -69,6 +70,26 @@ const LoginPage = () => {
       setLogin(null);
       localStorage.clear();
       sessionStorage.clear();
+
+      setFailedLoginAttempts((prevAttempts) => prevAttempts + 1); // Increment failed login attempts
+      if (failedLoginAttempts === 0) {
+        toast.error(
+          "Please try again later. You have three attempts",
+          toastPopup.error
+        );
+      } else if (failedLoginAttempts === 1) {
+        toast.error("You have 2 attempts left", toastPopup.error);
+      } else if (failedLoginAttempts === 2) {
+        toast.error(
+          "You have exceeded the maximum number of login attempts.",
+          toastPopup.error
+        );
+      } else if (failedLoginAttempts >= 3) {
+        toast.error(
+          "You have exceeded the maximum number of login attempts. please try again later",
+          toastPopup.error
+        );
+      }
     }
   };
   const handleEmailBlur = () => {

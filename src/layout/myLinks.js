@@ -16,5 +16,6 @@ const bizLinks = [
   { to: ROUTES.CREATECARD, children: "Create Card" },
   { to: ROUTES.MYCARDS, children: "My Cards" },
 ];
+const adminLinks = [{ to: ROUTES.EDITUSERS, children: "Edit Users" }];
 
 export { alwaysLinks, loggedInLinks, loggedOutLinks, bizLinks };
