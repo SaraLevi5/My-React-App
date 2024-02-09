@@ -15,7 +15,6 @@ const useAutoLogin = () => {
     }
     let userData = jwtDecode(token);
     if (!userData || !userData._id) {
-      console.log("no user data");
       setFinishAutoLogin(true);
       return;
     }
@@ -28,44 +27,9 @@ const useAutoLogin = () => {
       .catch((err) => {
         setFinishAutoLogin(true);
       });
-  }, []);
+  }, [setLogin]);
 
   return finishAutoLogin;
 };
-
-// const useAutoLogin = () => {
-//   const { setLogin } = useContext(LoginContext);
-//   const [finishAutoLogin, setFinishAutoLogin] = useState(false);
-
-//   useEffect(() => {
-//     const autoLogin = async () => {
-//       let token = localStorage.getItem("token");
-//       let tokenFromSession = sessionStorage.getItem("tokenFromSession");
-
-//       if (!token || !tokenFromSession) {
-//         setFinishAutoLogin(true);
-//         return;
-//       }
-
-//       try {
-//         let userData = jwtDecode(token) || jwtDecode(tokenFromSession);
-//         if (!userData || !userData._id) {
-//           setFinishAutoLogin(true);
-//           return;
-//         }
-
-//         const { data } = await axios.get(`/users/${userData._id}`);
-//         setLogin(userData);
-//         setFinishAutoLogin(true);
-//       } catch (error) {
-//         setFinishAutoLogin(true);
-//       }
-//     };
-
-//     autoLogin();
-//   }, [setLogin]);
-
-//   return finishAutoLogin;
-// };
 
 export default useAutoLogin;

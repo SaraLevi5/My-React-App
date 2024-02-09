@@ -2,7 +2,7 @@ import { Grid, Box, Typography } from "@mui/material";
 import CardComponent from "../../components/CardComponent";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import LoginContext from "../../store/loginContext.js";
 import { toast } from "react-toastify";
@@ -33,7 +33,7 @@ const Favorite = () => {
         }
       })
       .catch((err) => {});
-  }, [search]);
+  }, [search, login]);
 
   if (!dataFromServer || !dataFromServer.length) {
     return <Typography>Could not find any liked items...</Typography>;
@@ -50,10 +50,15 @@ const Favorite = () => {
   };
   const handleDeleteCard = async (id) => {
     try {
-      await axios.delete("/cards/" + id);
-      setDataFromServer((currentDataFromServer) => {
-        return currentDataFromServer.filter((card) => card._id !== id);
-      });
+      if (login) {
+        await axios.delete("/cards/" + id);
+        setDataFromServer((currentDataFromServer) =>
+          currentDataFromServer.filter((card) => card._id !== id)
+        );
+        toast.success("🦄 Card deleted successfully", toastPopup.success);
+      } else {
+        toast.error("🦄 please login", toastPopup.error);
+      }
     } catch (err) {
       toast.error("🦄 it's not your card ", toastPopup.error);
     }
@@ -63,16 +68,14 @@ const Favorite = () => {
     axios
       .get("/cards/" + id)
       .then(({ data }) => {
-        if (data.user_id == login._id) {
+        if (data.user_id === login._id) {
           navigate(`${ROUTES.EDITCARD}/${id}`);
         } else {
           toast.error("🦄 it's not your card", toastPopup.error);
           navigate(ROUTES.FAVORITE);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const handleLikeCard = async (id) => {
     try {
@@ -91,7 +94,7 @@ const Favorite = () => {
 
   return (
     <Box>
-      <Typography m={3} variant="h4" color="initial" textAlign={"center"}>
+      <Typography m={3} variant="h4" textAlign={"center"}>
         Favorites
       </Typography>
       <Grid container spacing={2}>

@@ -31,9 +31,7 @@ const HomePage = () => {
           );
         }
       })
-      .catch((err) => {
-        console.log("axios err", err);
-      });
+      .catch((err) => {});
   }, [search]);
 
   if (!dataFromServer || !dataFromServer.length) {
@@ -56,6 +54,7 @@ const HomePage = () => {
         setDataFromServer((currentDataFromServer) =>
           currentDataFromServer.filter((card) => card._id !== id)
         );
+        toast.success("🦄 Card deleted successfully", toastPopup.success);
       } else {
         toast.error("🦄 please login", toastPopup.error);
       }
@@ -67,7 +66,7 @@ const HomePage = () => {
     try {
       if (login) {
         let { data } = await axios.get("/cards/" + id);
-        if (data.user_id == login._id) {
+        if (data.user_id === login._id) {
           navigate(`${ROUTES.EDITCARD}/${id}`);
         } else {
           toast.error(
@@ -99,10 +98,10 @@ const HomePage = () => {
   };
   return (
     <Box>
-      <Typography m={3} variant="h3" color="initial" textAlign={"center"}>
+      <Typography m={3} variant="h3" textAlign={"center"}>
         Business Cards
       </Typography>
-      <Typography m={3} variant="h6" color="initial" textAlign={"center"}>
+      <Typography m={3} variant="h6" textAlign={"center"}>
         here you can find business cards from all categories
       </Typography>
       <Grid container spacing={2}>

@@ -1,11 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  IconButton,
-} from "@mui/material";
-
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -27,9 +22,10 @@ const FooterComponent = () => {
       case "My Cards":
         navigate(ROUTES.MYCARDS);
         break;
+      default:
+        break;
     }
   };
-
   return (
     <Paper
       elevation={4}
@@ -65,5 +61,4 @@ const FooterComponent = () => {
     </Paper>
   );
 };
-
 export default FooterComponent;

@@ -16,6 +16,6 @@ const bizLinks = [
   { to: ROUTES.CREATECARD, children: "Create Card" },
   { to: ROUTES.MYCARDS, children: "My Cards" },
 ];
-const adminLinks = [{ to: ROUTES.EDITUSERS, children: "Edit Users" }];
+const adminLinks = [{ to: ROUTES.CRMSYSTEM, children: "CRM system" }];
 
-export { alwaysLinks, loggedInLinks, loggedOutLinks, bizLinks };
+export { alwaysLinks, loggedInLinks, loggedOutLinks, bizLinks, adminLinks };

@@ -2,7 +2,7 @@ import { Grid, Box, Typography } from "@mui/material";
 import CardComponent from "../../components/CardComponent";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import LoginContext from "../../store/loginContext.js";
 import { toast } from "react-toastify";
@@ -29,9 +29,7 @@ const MyCards = () => {
           );
         }
       })
-      .catch((err) => {
-        console.log("error from axios", err);
-      });
+      .catch((err) => {});
   }, [search]);
 
   if (!dataFromServer || !dataFromServer.length) {
@@ -49,12 +47,17 @@ const MyCards = () => {
   };
   const handleDeleteCard = async (id) => {
     try {
-      await axios.delete("/cards/" + id);
-      setDataFromServer((currentDataFromServer) => {
-        return currentDataFromServer.filter((card) => card._id !== id);
-      });
+      if (login) {
+        await axios.delete("/cards/" + id);
+        setDataFromServer((currentDataFromServer) =>
+          currentDataFromServer.filter((card) => card._id !== id)
+        );
+        toast.success("🦄 Card deleted successfully", toastPopup.success);
+      } else {
+        toast.error("🦄 please login", toastPopup.error);
+      }
     } catch (err) {
-      console.log(err);
+      toast.error("🦄 it's not your card ", toastPopup.error);
     }
   };
 
@@ -62,7 +65,7 @@ const MyCards = () => {
     axios
       .get("/cards/" + id)
       .then(({ data }) => {
-        if (data.user_id == login._id) {
+        if (data.user_id === login._id) {
           navigate(`${ROUTES.EDITCARD}/${id}`);
         } else {
           toast.error(
@@ -72,9 +75,7 @@ const MyCards = () => {
           navigate(ROUTES.HOME);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const handleLikeCard = async (id) => {
     try {
@@ -94,7 +95,7 @@ const MyCards = () => {
 
   return (
     <Box>
-      <Typography m={3} variant="h4" color="initial" textAlign={"center"}>
+      <Typography m={3} variant="h4" textAlign={"center"}>
         My Cards
       </Typography>
 

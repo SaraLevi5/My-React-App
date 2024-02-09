@@ -5,7 +5,6 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import NotFoundPage from "../pages/404/NotFoundPage";
 import AboutUsPage from "../pages/About/AboutUsPage";
-
 import CreatCardPage from "../pages/CreatCard/CreatCard";
 import EditCardPage from "../pages/EditCardPage/EditCardPage";
 import MyCards from "../pages/MyCards/MyCards";
@@ -58,7 +57,7 @@ const Router = () => {
         }
       />
       <Route
-        path={`${ROUTES.EDITCARD}/:id`}
+        path={ROUTES.CRMSYSTEM}
         element={
           <AdminGuard>
             <AdminCRM />

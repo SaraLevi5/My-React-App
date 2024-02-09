@@ -2,17 +2,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import Search from "./Search";
 import SearchIconWrapper from "./SearchIconWrapper";
 import StyledInputBase from "./StyledInputBase";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import searchContext from "../../../store/searchContext";
 
 const FilterComponent = () => {
   const { search, setSearch } = useContext(searchContext);
-
   const handleInputChange = (e) => {
     setSearch(e.target.value);
-    console.log(e.target.value);
   };
-
   return (
     <Search>
       <SearchIconWrapper>
@@ -27,5 +24,4 @@ const FilterComponent = () => {
     </Search>
   );
 };
-
 export default FilterComponent;

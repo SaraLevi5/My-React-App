@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import Frame from "react-frame-component";
+import PropTypes from "prop-types";
 
 const EmbeddedMap = ({ city }) => {
   const embedUrl = `https://maps.google.com/maps?width=100%25&height=600&hl=en&q=${encodeURIComponent(
@@ -18,6 +18,10 @@ const EmbeddedMap = ({ city }) => {
       ></iframe>
     </Box>
   );
+};
+
+EmbeddedMap.propTypes = {
+  city: PropTypes.string,
 };
 
 export default EmbeddedMap;

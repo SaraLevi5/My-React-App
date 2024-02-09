@@ -83,9 +83,7 @@ const EditCardPage = () => {
       await axios.post("/cards", dataToPost);
       toast.success("🦄 Card created successfully", toastPopup.success);
       navigate(ROUTES.MYCARDS);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (

@@ -66,7 +66,6 @@ const RegisterPage = () => {
         ...copyOfErrors,
         [e.target.id]: dataFromJoi.error.details[0].message,
       }));
-      console.log(dataFromJoi.error.details[0]);
     } else {
       setErrors((copyOfErrors) => {
         delete copyOfErrors[e.target.id];
@@ -88,9 +87,7 @@ const RegisterPage = () => {
     try {
       await axios.post("/users", dataToPost);
       navigate(ROUTES.LOGIN);
-    } catch (err) {
-      console.log("error from axios", err);
-    }
+    } catch (err) {}
   };
   return (
     <Box

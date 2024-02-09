@@ -1,14 +1,15 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
+import { useContext } from "react";
+import LoginContext from "../store/loginContext";
+import { Navigate } from "react-router-dom";
+import ROUTES from "../routes/ROUTES";
 
-function AdminGuard() {
-  return (
-    <Box>
-      <Typography variant="h1" color="initial">
-        AdminGuard
-      </Typography>
-    </Box>
-  );
-}
+const AdminGuard = ({ children }) => {
+  const { login } = useContext(LoginContext);
+  if (login && login.isBusiness && login.isAdmin) {
+    return children;
+  } else {
+    return <Navigate to={ROUTES.LOGIN} />;
+  }
+};
 
 export default AdminGuard;

@@ -67,10 +67,8 @@ const EditCardPage = () => {
       .then(({ data }) => {
         setInputsValue(fromServer(data));
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [id]);
+      .catch((err) => {});
+  }, [id, login]);
 
   const handleInputsChange = (e) => {
     setInputsValue((cInputsValue) => ({
@@ -102,9 +100,7 @@ const EditCardPage = () => {
       toast.success("🦄 Card edited successfully", toastPopup.success);
 
       navigate(ROUTES.MYCARDS);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   return (
