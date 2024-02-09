@@ -4,10 +4,14 @@ import Typography from "@mui/material/Typography";
 const AboutUsPage = () => {
   return (
     <Fragment>
-      <Typography variant="h3" mb={3}>
+      <Typography variant="h3" mb={3} textAlign={"center"}>
         business cards
       </Typography>
-      <Typography variant="p" sx={{ lineHeight: "2rem" }}>
+      <Typography
+        variant="h6"
+        sx={{ lineHeight: "2rem" }}
+        textAlign={"justify"}
+      >
         Welcome to business card, where connecting businesses with their
         customers is our passion. Our platform serves as a virtual marketplace
         for businesses of all sizes, allowing them to create and showcase their
@@ -32,6 +36,9 @@ const AboutUsPage = () => {
         let's build a vibrant community where businesses thrive and customers
         find the solutions they need. Thank you for choosing business card. We
         look forward to being a part of your business journey.
+      </Typography>
+      <Typography variant="h4" mt={3} textAlign={"center"}>
+        Hope you enjoy our platform!
       </Typography>
     </Fragment>
   );

@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -12,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
 import ROUTES from "../../routes/ROUTES";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import normalizeRegister from "./normalizeRegister";
 import validateSchema from "../../validation/registerValidation";
 
@@ -326,9 +325,7 @@ const RegisterPage = () => {
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link href="#" variant="body2">
-              Already have an account? Sign in
-            </Link>
+            <Link to={ROUTES.LOGIN}>{"Already have an account? Sign in"}</Link>
           </Grid>
         </Grid>
       </Box>

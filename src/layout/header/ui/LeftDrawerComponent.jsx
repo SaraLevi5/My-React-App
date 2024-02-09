@@ -28,8 +28,11 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
   const { login } = useContext(LoginContext);
 
   const handleListClick = (text) => {
-    let link = text.toUpperCase();
-    console.log(text);
+    // let link = text.toUpperCase();
+
+    const link = text.split(" ").join("").toUpperCase();
+    console.log(link);
+
     navigate(ROUTES[link]);
   };
 
@@ -70,6 +73,34 @@ const LeftDrawerComponent = ({ isOpen, onCloseDrawer }) => {
         {login && (
           <List>
             {["Favorite"].map((text, index) => (
+              <ListItem key={text + index} disablePadding>
+                <ListItemButton>
+                  <ListItemText
+                    primary={text}
+                    onClick={() => handleListClick(text)}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        )}
+        {login && login.isBusiness && (
+          <List>
+            {["Create Card", "My Cards"].map((text, index) => (
+              <ListItem key={text + index} disablePadding>
+                <ListItemButton>
+                  <ListItemText
+                    primary={text}
+                    onClick={() => handleListClick(text)}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        )}
+        {login && login.isBusiness && login.isAdmin && (
+          <List>
+            {["Create Card", "My Cards"].map((text, index) => (
               <ListItem key={text + index} disablePadding>
                 <ListItemButton>
                   <ListItemText

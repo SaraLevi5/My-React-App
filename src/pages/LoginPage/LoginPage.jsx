@@ -21,7 +21,7 @@ import LoginContext from "../../store/loginContext";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
 import toastPopup from "../../services/toastPopup.js";
-import validateLogin, {
+import {
   validateEmailLogin,
   validatePasswordLogin,
 } from "../../validation/loginValidation";
@@ -54,13 +54,17 @@ const LoginPage = () => {
       });
       if (checked) {
         localStorage.setItem("token", data);
+        const decoded = jwtDecode(data);
+        setLogin(decoded);
+        toast.success("🦄 LoggedIn Successfully", toastPopup.success);
+        navigate(ROUTES.HOME);
       } else {
         sessionStorage.setItem("tokenFromSession", data);
+        const decoded = jwtDecode(data);
+        setLogin(decoded);
+        toast.success("🦄 LoggedIn Successfully", toastPopup.success);
+        navigate(ROUTES.HOME);
       }
-      const decoded = jwtDecode(data);
-      setLogin(decoded);
-      toast.success("🦄 LoggedIn Successfully", toastPopup.success);
-      navigate(ROUTES.HOME);
     } catch (err) {
       setLogin(null);
       localStorage.clear();
@@ -69,7 +73,6 @@ const LoginPage = () => {
   };
   const handleEmailBlur = () => {
     let dataFromJoi = validateEmailLogin({ email: emailValue });
-    console.log("dataFromJoi", dataFromJoi);
     if (dataFromJoi.error) {
       setEmailError(dataFromJoi.error.details[0].message);
     } else {
@@ -127,14 +130,14 @@ const LoginPage = () => {
             sx={{ mt: 1 }}
           >
             <TextField
+              autoFocus
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
               name="email"
+              label="Email Address"
+              id="email"
               autoComplete="email"
-              autoFocus
               value={emailValue}
               onChange={handleEmailChange}
               onBlur={handleEmailBlur}

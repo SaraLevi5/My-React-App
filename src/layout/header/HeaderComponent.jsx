@@ -4,14 +4,11 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Switch } from "@mui/material";
 import LoginContext from "../../store/loginContext";
@@ -63,6 +60,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
+    sessionStorage.removeItem("tokenFromSession");
     setLogin(null);
     navigate(ROUTES.LOGIN);
   };

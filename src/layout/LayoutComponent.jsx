@@ -25,9 +25,6 @@ const LayoutComponent = ({ children }) => {
     setDarkTheme(checked);
   };
 
-  // if (!finishAutoLogin) {
-  //   return <Typography>Loading...</Typography>;
-  // }
   return (
     <ThemeProvider theme={isDarkTheme ? darkMode : lightMode}>
       <CssBaseline />

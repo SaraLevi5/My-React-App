@@ -1,4 +1,5 @@
 const normalizeCards = (cards, myId) => {
+  console.log("myId", myId);
   if (!cards) return null;
   const newCards = cards.map((card) => ({
     ...card,

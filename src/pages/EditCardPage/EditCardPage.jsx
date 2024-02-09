@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Avatar, Typography, Grid, Button } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import axios from "axios";
 import TextInputComponent from "../../components/TextInputComponent";
 import validateSchema from "../../validation/cardValidation";
@@ -117,7 +117,7 @@ const EditCardPage = () => {
       }}
     >
       <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-        <LockOutlinedIcon />
+        <ModeEditOutlineIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
         Edit your card

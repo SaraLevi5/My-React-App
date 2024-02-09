@@ -1,5 +1,4 @@
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import { Grid, Box, Typography } from "@mui/material";
 import CardComponent from "../../components/CardComponent";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
@@ -9,6 +8,7 @@ import LoginContext from "../../store/loginContext.js";
 import { toast } from "react-toastify";
 import normalizeCard from "../HomePage/normalizeCard.js";
 import searchContext from "../../store/searchContext";
+import toastPopup from "../../services/toastPopup.js";
 
 const MyCards = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
@@ -20,7 +20,7 @@ const MyCards = () => {
     axios
       .get("/cards/my-cards")
       .then(({ data }) => {
-        setDataFromServer(data);
+        setDataFromServer(normalizeCard(data));
         if (search) {
           setDataFromServer((currentDataFromServer) =>
             currentDataFromServer.filter((card) =>
@@ -44,7 +44,9 @@ const MyCards = () => {
   if (!dataFromServerFiltered || !dataFromServerFiltered.length) {
     return <Typography>Could not find any items</Typography>;
   }
-
+  const handleCard = (id) => {
+    navigate(`${ROUTES.LANDINGPAGE}/${id}`);
+  };
   const handleDeleteCard = async (id) => {
     try {
       await axios.delete("/cards/" + id);
@@ -63,16 +65,10 @@ const MyCards = () => {
         if (data.user_id == login._id) {
           navigate(`${ROUTES.EDITCARD}/${id}`);
         } else {
-          toast.error("🦄 You are not the owner of this card", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          toast.error(
+            "🦄 You are not the owner of this card",
+            toastPopup.error
+          );
           navigate(ROUTES.HOME);
         }
       })
@@ -88,43 +84,42 @@ const MyCards = () => {
         if (cardIndex) {
           cDataFromServer[cardIndex] = data;
         }
+        navigate(ROUTES.MYCARDS);
         return [...cDataFromServer];
       });
     } catch (error) {
-      toast.error("🦄 Please Login", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.error("🦄 Please Login", toastPopup.error);
     }
   };
 
   return (
-    <Grid container spacing={2}>
-      {dataFromServerFiltered.map((item, index) => (
-        <Grid item lg={3} md={6} xs={12} key={"Card" + index}>
-          <CardComponent
-            id={item._id}
-            title={item.title}
-            subtitle={item.subtitle}
-            img={item.image.url}
-            alt={item.image.alt}
-            phone={item.phone}
-            address={item.address}
-            cardNumber={item.bizNumber}
-            liked={item.liked}
-            onDelete={handleDeleteCard}
-            onEdit={handleEditCard}
-            onLike={handleLikeCard}
-          />
-        </Grid>
-      ))}
-    </Grid>
+    <Box>
+      <Typography m={3} variant="h4" color="initial" textAlign={"center"}>
+        My Cards
+      </Typography>
+
+      <Grid container spacing={2}>
+        {dataFromServerFiltered.map((item, index) => (
+          <Grid item lg={3} md={6} xs={12} key={"Card" + index}>
+            <CardComponent
+              id={item._id}
+              title={item.title}
+              subtitle={item.subtitle}
+              img={item.image.url}
+              alt={item.image.alt}
+              phone={item.phone}
+              address={item.address}
+              cardNumber={item.bizNumber}
+              liked={item.liked}
+              onCard={handleCard}
+              onDelete={handleDeleteCard}
+              onEdit={handleEditCard}
+              onLike={handleLikeCard}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 };
 

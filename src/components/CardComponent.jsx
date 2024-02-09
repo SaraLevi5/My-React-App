@@ -1,4 +1,3 @@
-// import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import {
   Card,
   CardHeader,
@@ -79,9 +78,6 @@ const CardComponent = ({
             </IconButton>
           </Box>
           <Box>
-            {/* {<IconButton>
-              <LocalPhoneIcon />
-            </IconButton>} */}
             <IconButton onClick={handleLikeClick}>
               <FavoriteIcon color={liked ? "error" : "inherit"} />
             </IconButton>

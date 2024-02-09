@@ -20,12 +20,10 @@ const LandingPage = () => {
     axios
       .get("/cards/" + id)
       .then(({ data }) => {
-        console.log(data);
         setDataFromServer(data);
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
       });
   }, []);
@@ -43,33 +41,25 @@ const LandingPage = () => {
             alt={dataFromServer.image.alt}
           />
           <CardContent>
+            <Typography component="span" fontWeight={700}>
+              more details about that business:
+            </Typography>
             <Typography variant="body2">
-              <Typography fontWeight={700}>
-                more details about that business:
-                <br />
-              </Typography>
-              {` ${dataFromServer.description}`}
+              {dataFromServer.description}
             </Typography>
           </CardContent>
           <Divider />
           <CardContent>
+            <Typography fontWeight={700}>Address:</Typography>
             <Typography variant="body2" color="text.secondary">
-              <Typography fontWeight={700}>
-                Address:
-                <br />
-              </Typography>
               {`${dataFromServer.address.country}, ${dataFromServer.address.city}, ${dataFromServer.address.street} ${dataFromServer.address.houseNumber} `}{" "}
             </Typography>
+            <Typography fontWeight={700}>Email:</Typography>
             <Typography variant="body2" color="text.secondary">
-              <Typography fontWeight={700}>
-                Email: <br />
-              </Typography>
               {`${dataFromServer.email}`}
             </Typography>
+            <Typography fontWeight={700}>Phone:</Typography>
             <Typography variant="body2" color="text.secondary">
-              <Typography fontWeight={700}>
-                Phone: <br />
-              </Typography>
               {`${dataFromServer.phone}`}
             </Typography>
           </CardContent>
@@ -78,10 +68,6 @@ const LandingPage = () => {
       <Grid item lg={6} md={6} xs={12}>
         <EmbeddedMap city={dataFromServer.address.city} />
       </Grid>
-
-      {/* <Grid item lg={3} md={12} xs={12}>
-        <Card></Card>
-      </Grid> */}
     </Grid>
   );
 };

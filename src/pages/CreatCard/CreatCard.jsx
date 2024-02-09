@@ -1,14 +1,14 @@
-import { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 import { Box, Avatar, Typography, Grid, Button } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import axios from "axios";
 import TextInputComponent from "../../components/TextInputComponent";
 import validateSchema from "../../validation/cardValidation";
-import LoginContext from "../../store/loginContext";
 import { normalizeCreat } from "./normalizeCreat.js";
 import ROUTES from "../../routes/ROUTES.js";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import toastPopup from "../../services/toastPopup.js";
 
 const EditCardPage = () => {
   const [inputsValue, setInputsValue] = useState({
@@ -81,6 +81,7 @@ const EditCardPage = () => {
     const dataToPost = normalizeCreat(inputsValue);
     try {
       await axios.post("/cards", dataToPost);
+      toast.success("🦄 Card created successfully", toastPopup.success);
       navigate(ROUTES.MYCARDS);
     } catch (error) {
       console.log(error);
@@ -97,7 +98,7 @@ const EditCardPage = () => {
       }}
     >
       <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-        <LockOutlinedIcon />
+        <NoteAddIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
         Create your card
