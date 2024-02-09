@@ -1,7 +1,7 @@
 import React from "react";
 
 function EditUser() {
-  return <div></div>;
+  return <div>coming soon...</div>;
 }
 
 export default EditUser;
