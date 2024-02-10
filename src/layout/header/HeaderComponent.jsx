@@ -18,6 +18,8 @@ import { useState, useContext } from "react";
 import FilterComponent from "./ui/FilterComponent";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
+import { toast } from "react-toastify";
+import toastPopup from "../../services/toastPopup";
 
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -62,6 +64,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
     localStorage.removeItem("token");
     sessionStorage.removeItem("tokenFromSession");
     setLogin(null);
+    toast.success("Logout successful", toastPopup.success);
     navigate(ROUTES.LOGIN);
   };
 

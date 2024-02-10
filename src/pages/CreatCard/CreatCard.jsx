@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Box, Avatar, Typography, Grid, Button } from "@mui/material";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import axios from "axios";
@@ -41,17 +41,8 @@ const EditCardPage = () => {
   const navigate = useNavigate();
 
   let keysArray = Object.keys(inputsValue);
-  let errorKeysArray = [
-    "title",
-    "subtitle",
-    "description",
-    "phone",
-    "email",
-    "country",
-    "city",
-    "street",
-    "houseNumber",
-  ];
+  const errorKeysArrayRef = useRef(Object.keys(errors));
+  const errorKeysArray = errorKeysArrayRef.current;
 
   const handleInputsChange = (e) => {
     setInputsValue((cInputsValue) => ({

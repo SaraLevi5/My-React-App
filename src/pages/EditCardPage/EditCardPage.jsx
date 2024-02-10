@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Avatar, Typography, Grid, Button } from "@mui/material";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
@@ -43,19 +43,10 @@ const EditCardPage = () => {
     zip: "",
   });
   let keysArray = Object.keys(inputsValue);
-  let errorKeysArray = [
-    "title",
-    "subtitle",
-    "description",
-    "phone",
-    "email",
-    "country",
-    "city",
-    "street",
-    "houseNumber",
-  ];
+  const errorKeysArrayRef = useRef(Object.keys(errors));
+  const errorKeysArray = errorKeysArrayRef.current;
 
-  let { id } = useParams(); //get id from url
+  let { id } = useParams();
   const { login } = useContext(LoginContext);
 
   useEffect(() => {

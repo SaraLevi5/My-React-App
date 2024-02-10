@@ -3,6 +3,7 @@ import propTypes from "prop-types";
 
 const TextInputComponent = ({
   xs,
+  sm,
   id,
   label,
   autoFocus,
@@ -11,9 +12,10 @@ const TextInputComponent = ({
   onBlur,
   errors,
   required,
+  type,
 }) => {
   return (
-    <Grid item xs={xs}>
+    <Grid item xs={xs} sm={sm}>
       <TextField
         name={id}
         fullWidth
@@ -24,6 +26,7 @@ const TextInputComponent = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        type={type}
       />
       {errors && <Alert severity="error">{errors}</Alert>}
     </Grid>
@@ -32,6 +35,7 @@ const TextInputComponent = ({
 
 TextInputComponent.prototype = {
   xs: propTypes.number,
+  sm: propTypes.number,
   id: propTypes.string.isRequired,
   label: propTypes.string.isRequired,
   autoFocus: propTypes.bool,
@@ -40,6 +44,7 @@ TextInputComponent.prototype = {
   onBlur: propTypes.func,
   errors: propTypes.string,
   required: propTypes.bool,
+  type: propTypes.string,
 };
 
 TextInputComponent.defaultProps = {
