@@ -2,6 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+to be able to see the project in your computer you need to run:
+## `npm i`
+and then run:
+## `npm start`
+
 ## Available Scripts
 
 In the project directory, you can run:
