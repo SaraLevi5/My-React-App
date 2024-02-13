@@ -91,7 +91,9 @@ const RegisterPage = () => {
       await axios.post("/users", dataToPost);
       toast.success("🦄 User created successfully", toastPopup.success);
       navigate(ROUTES.LOGIN);
-    } catch (err) {}
+    } catch (err) {
+      toast.error("🦄 email already exists", toastPopup.error);
+    }
   };
   return (
     <Box
