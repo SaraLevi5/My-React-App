@@ -8,7 +8,7 @@ const AdminCRM = () => {
         <Typography variant="span" color="primary">
           CRM system {""}
         </Typography>
-        is Coming soon...
+        is Coming soon.
       </Typography>
       <CardMedia
         title="this page is in progress"
