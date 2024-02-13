@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LayoutComponent from "./layout/LayoutComponent";
 import Router from "./routes/Router";
 import LoginContext from "./store/loginContext";

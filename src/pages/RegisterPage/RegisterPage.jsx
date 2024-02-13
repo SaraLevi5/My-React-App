@@ -35,7 +35,6 @@ const RegisterPage = () => {
   });
 
   const [isBusiness, setIsBusiness] = useState(false);
-  console.log(typeof isBusiness);
 
   const [errors, setErrors] = useState({
     first: "",
@@ -92,9 +91,7 @@ const RegisterPage = () => {
       await axios.post("/users", dataToPost);
       toast.success("🦄 User created successfully", toastPopup.success);
       navigate(ROUTES.LOGIN);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
   return (
     <Box

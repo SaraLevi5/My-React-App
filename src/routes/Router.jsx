@@ -14,6 +14,7 @@ import AdminGuard from "../guard/AdminGuard";
 import Favorite from "../pages/Favorite/Favorite";
 import LandingPage from "../pages/LandingPage/LandingPage";
 import AdminCRM from "../sandbox/AdminCRM";
+import EditUser from "../sandbox/EditUser";
 
 const Router = () => {
   return (
@@ -28,6 +29,15 @@ const Router = () => {
         element={
           <AuthGuard>
             <Favorite />
+          </AuthGuard>
+        }
+      />
+
+      <Route
+        path={ROUTES.EDITUSER}
+        element={
+          <AuthGuard>
+            <EditUser />
           </AuthGuard>
         }
       />

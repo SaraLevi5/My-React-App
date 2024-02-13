@@ -10,5 +10,6 @@ const ROUTES = {
   SANDBOX: "/sandbox",
   FAVORITE: "/favorite",
   CRMSYSTEM: "/crmsystem",
+  EDITUSER: "/profile",
 };
 export default ROUTES;

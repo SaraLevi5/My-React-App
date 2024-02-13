@@ -43,6 +43,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+    navigate(ROUTES.EDITUSER);
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -62,7 +63,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
-    sessionStorage.removeItem("tokenFromSession");
     setLogin(null);
     toast.success("Logout successful", toastPopup.success);
     navigate(ROUTES.LOGIN);
@@ -86,7 +86,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
 
@@ -188,29 +187,33 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
                 <LogoutIcon />
               </IconButton>
             )}
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            {login && (
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            )}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
+            {login && (
+              <IconButton
+                size="large"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

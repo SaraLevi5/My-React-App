@@ -6,8 +6,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Paper,
   Box,
   Grid,
@@ -25,7 +23,6 @@ import {
   validateEmailLogin,
   validatePasswordLogin,
 } from "../../validation/loginValidation";
-
 const LoginPage = () => {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -34,18 +31,12 @@ const LoginPage = () => {
   const [failedLoginAttempts, setFailedLoginAttempts] = useState(0); // State for failed login attempts
   const navigate = useNavigate();
   const { setLogin } = useContext(LoginContext);
-  const [checked, setChecked] = useState(false);
-
   const handleEmailChange = (e) => {
     setEmailValue(e.target.value);
   };
   const handlePasswordChange = (e) => {
     setPasswordValue(e.target.value);
   };
-  const handleCheckBoxChange = (e) => {
-    setChecked(e.target.checked);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -53,24 +44,15 @@ const LoginPage = () => {
         email: emailValue,
         password: passwordValue,
       });
-      if (checked) {
-        localStorage.setItem("token", data);
-        const decoded = jwtDecode(data);
-        setLogin(decoded);
-        toast.success("🦄 LoggedIn Successfully", toastPopup.success);
-        navigate(ROUTES.HOME);
-      } else {
-        sessionStorage.setItem("tokenFromSession", data);
-        const decoded = jwtDecode(data);
-        setLogin(decoded);
-        toast.success("🦄 LoggedIn Successfully", toastPopup.success);
-        navigate(ROUTES.HOME);
-      }
+
+      localStorage.setItem("token", data);
+      const decoded = jwtDecode(data);
+      setLogin(decoded);
+      toast.success("🦄 LoggedIn Successfully", toastPopup.success);
+      navigate(ROUTES.HOME);
     } catch (err) {
       setLogin(null);
       localStorage.clear();
-      sessionStorage.clear();
-
       setFailedLoginAttempts((prevAttempts) => prevAttempts + 1); // Increment failed login attempts
       if (failedLoginAttempts === 0) {
         toast.error(
@@ -178,11 +160,6 @@ const LoginPage = () => {
               onBlur={handlePasswordBlur}
             />
             {passwordError && <Alert severity="error">{passwordError}</Alert>}
-            <FormControlLabel
-              control={<Checkbox value={checked} color="primary" />}
-              label="Remember me"
-              onClick={handleCheckBoxChange}
-            />
             <Button
               type="submit"
               fullWidth

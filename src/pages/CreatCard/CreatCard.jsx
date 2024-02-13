@@ -37,6 +37,7 @@ const EditCardPage = () => {
     city: "",
     street: "",
     houseNumber: "",
+    zip: "",
   });
   const navigate = useNavigate();
 

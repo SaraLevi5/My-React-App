@@ -26,7 +26,7 @@ const LandingPage = () => {
       .catch((err) => {
         setLoading(false);
       });
-  }, []);
+  }, [id]);
   if (loading) {
     return <Typography>Loading...</Typography>;
   }
