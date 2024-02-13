@@ -16,6 +16,8 @@ const LayoutComponent = ({ children }) => {
     "text.headerColor": "!gray",
     "text.headerActive": "*white",
     favActive: "*#FB0000",
+    primary: "#4E60BA",
+    "background.default": "#EBEEFF",
   });
 
   const darkMode = createTheme(themes.dark);
